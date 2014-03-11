@@ -4,5 +4,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
+	var partida = req.utils;
+	console.trace(partida().getListaPartidas);
+	res.render('index', { title: 'Express', partidas: partida().getListaPartidas() });
+}
+

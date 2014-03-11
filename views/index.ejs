@@ -18,7 +18,7 @@
   	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">La Quinta</a>
+          <a class="navbar-brand" href="./">La Quinta</a>
         </div>
       </div>
     </div>
@@ -42,11 +42,29 @@
     			 <div class="">
 
 	    			<h3>Partidas</h3>
-	    			<div class="list-group">
+	    			<% for ( var i= 0 ; i < partidas.length ; i++ ) {%>
+	    				<div class="list-group">
+							<div class="list-item">
+								<span>Partida <%=partidas[i].PartidaId %></span>
+								<% if (partidas[i].Jugador1 !== null){ %>
+								<span>Jugador <%=partidas[i].Jugador1.Nombre%></span>
+
+								<% } else if (partidas[i].Jugador2 !== null){%>
+								<span>Jugador <%=partidas[i].Jugador1.Nombre%></span>
+
+								<%} %>
+								<a class="btn btn-xs btn-primary" type="button" href="/partida/<%=partidas[i].PartidaId %>">
+									Unirse
+								</a>
+							</div>
+						</div>
+    				<%}%>
+		    			
+					<div class="list-group">
 						<div class="list-item">
-							<span>Partida 123</span>
-							<a class="btn btn-xs btn-primary" type="button" href="/partida/123">
-								Unirse
+							<span>Nueva Partida</span>
+							<a class="btn btn-xs btn-primary" type="button" href="./partidaNueva">
+								Crear Nueva Partida
 							</a>
 						</div>
 					</div>
