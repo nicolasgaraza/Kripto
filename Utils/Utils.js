@@ -102,11 +102,23 @@ Partida.prototype.pausar = function(jugador){
 	//mas adelante generar un tick para que a el x tiempo lo despause
 };
 
-Partida.prototype.puedeJugar = function(jugador){
+Partida.prototype.puedeJugar = function(){
 	if(this.Jugador1 !== null && this.Jugador2 !== null)
 		return true;
 	return false;
 };
+
+Partida.prototype.validarJugador = function(jugador){
+	if((this.Jugador1 !== null && this.Jugador1.Nombre === jugador)
+		|| (this.Jugador2 !== null && this.Jugador2.Nombre === jugador)){
+		return true;
+	}
+	else if(this.Jugador2 !== false)
+	{
+		return true;
+	}
+	return false;
+}
 
 
  function Baraja(){

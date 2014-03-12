@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <head>
+    <title> Error</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+  	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/default">La Quinta</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    	<div class="alert alert-danger">
+        <%= ErrorMessage %>
+        <a href="/default" class="alert-link">Volver</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -25,11 +25,11 @@
 
     <div class="container">
     	<div class="row">
-    		<div class="col-lg-8">
+    		<div class="col-md-10">
     			 <div class="jumbotron">
 					<div class="container">
 			    			<!--Contenido de la partida -->
-			    			<p>Bienvenido al juego de la quinta</p>
+			    			<p>Bienvenido <%=jugador %> al juego de la quinta</p>
 			    			<p>El mismo consiste en un exitante duelo entre dos jugadores para descubrir cual es el mas rapido e inteligente dado problemas matematicos propuestos por una baraja de cartas</p>
 			    			<div class="container" >
 								<span>Instrucciones</span>
@@ -38,23 +38,37 @@
 		    		</div>
 	    		</div>
     		</div>
-			<div class="col-lg-4">
-	    		Este es un login precario
-	    		<div class=" panel panel-default">
-	    			<div class="panel-body">
-	    				<form   name="login" action="/login" method="post" >
-			    			<div class="input-group input-group-sm">
-							  <span class="input-group-addon glyphicon-class"></span>
-							  <input type="text" name="jugadorName" class="form-control" placeholder="Nombre Jugador"/>
-							</div>  
-						</br>
-							<div class="input-group input-group-sm">
-						  		<input type="submit" value="LogIn" class="btn btn-default"/>
+    		<div class="col-md-2">
+    			 <div class="">
+			 		Hacer que las partidas sean dinamicamente cargadas
+	    			<h3>Partidas</h3>
+	    			<% for ( var i= 0 ; i < partidas.length ; i++ ) {%>
+	    				<div class="list-group">
+							<div class="list-item">
+								<span>Partida <%=partidas[i].PartidaId %></span>
+								<% if (partidas[i].Jugador1 !== null){ %>
+								<span>Jugador <%=partidas[i].Jugador1.Nombre%></span>
+
+								<% } else if (partidas[i].Jugador2 !== null){%>
+								<span>Jugador <%=partidas[i].Jugador1.Nombre%></span>
+
+								<%} %>
+								<a class="btn btn-xs btn-primary" type="button" href="/partida/<%=partidas[i].PartidaId %>">
+									Unirse
+								</a>
 							</div>
-			    		</form>
-	    			</div>
-	    		</div>
-	    		
+						</div>
+    				<%}%>
+		    			
+					<div class="list-group">
+						<div class="list-item">
+							<span>Nueva Partida</span>
+							<a class="btn btn-xs btn-primary" type="button" href="./partidaNueva">
+								Crear Nueva Partida
+							</a>
+						</div>
+					</div>
+				</div>
     		</div>
     	</div>
     </div>

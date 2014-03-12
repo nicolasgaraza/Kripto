@@ -29,9 +29,10 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser('0388b821-0fe6-4062-8916-aae01a892a9d'));
 app.use(express.session());
-
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
 
 
 app.use(function (req, res, next){
@@ -40,17 +41,34 @@ app.use(function (req, res, next){
 	next();
 });
 
+var validarUsuarioEnRequest = function (req, res, next){
+	if( req.session.jugadorNombre === undefined){
+		//guardamos en la session cual era la pagina deseada
+		req.session.paginaSolicitada =  req.protocol + '://' + req.get('host') + req.originalUrl;
+		console.log("pagina deseada antes de loguearse %s", req.session.paginaSolicitada  );
+		res.redirect('/');
+	}
+	else
+		next();
+};
+
+app.use('/partida', validarUsuarioEnRequest);
+app.use('/default', validarUsuarioEnRequest);
+
 app.use(app.router);
 app.use(require('less-middleware')( path.join(__dirname, '/public') ));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('./routes/error').error);
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  //app.use(express.errorHandler());
 }
 
 
 app.get('/', routes.index);
+app.post('/login', routes.login);
+app.get('/default', routes.default);
 app.get('/partida/:partidaId', partida.selectPartida);
 app.get('/partidaNueva', partida.newPartida);
 
