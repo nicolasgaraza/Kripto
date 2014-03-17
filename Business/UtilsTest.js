@@ -8,6 +8,7 @@ var partida = null;
 exports.Suit1 = {
 
 	crearPartida :  function(test){
+		console.log('crear partida test');
 		// procedemos a crear una paritda
 		partida  = utils.createPartida();
 		test.ok(partida !== null, "la partida fue creada con exito");
@@ -100,6 +101,30 @@ exports.Suit1 = {
 
 
 		test.done();
-	}
+	}/*,
+	setJugadorIO : function(test){
+		test.throws( function (){
+			utils.setIoSocketAJugador(partida.PartidaId + "123", 'jugador1', {});
+		}, null, "La partida solicitada no deberia existir");
+
+		test.throws( function (){
+			utils.setIoSocketAJugador(partida.PartidaId , 'nosoyJugador', {});
+		}, null, "El jugador solicitado no es parte de la partida, deberia indicar un error");
+
+		var mockIO = "CodigoValor 123";
+		utils.setIoSocketAJugador(partida.PartidaId , partida.Jugador1.Nombre,  mockIO);
+		test.ok( partida.Jugador1.Io === mockIO, 
+			"El Id del Io para el jugador " + partida.Jugador1.Nombre + ' deberia ser igual al indicado ' + mockIO );
+
+		mockIO =  "CodigoValor 123";
+
+		utils.setIoSocketAJugador(partida.PartidaId , partida.Jugador2.Nombre,  mockIO);
+		test.ok( partida.Jugador2.Io === mockIO, 
+			"El Id del Io para el jugador " + partida.Jugador1.Nombre + ' deberia ser igual al indicado ' + mockIO );
+
+
+
+		test.done();
+	}*/
 
 };

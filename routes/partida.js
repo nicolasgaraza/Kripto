@@ -5,8 +5,7 @@ module.exports = function(app){
  return {
   selectPartida : function(req, res){
 
-        var io =  app.get("io");
-        //debo realizar el procesamiento del socket io
+       
 
         console.log("buscamos la partida " + req.params.partidaId );
 
@@ -26,6 +25,9 @@ module.exports = function(app){
           console.log("se ha agregado al jugador %s a la partida %j", req.session.jugadorNombre, partida);
           utils.setJugador(partida.PartidaId, req.session.jugadorNombre);
         }
+
+        //Creamos el puente socket.io para esta partida
+
 
         //renderizamos la pagina solicitada
         res.render("partida", {partidaId : req.params.partidaId});

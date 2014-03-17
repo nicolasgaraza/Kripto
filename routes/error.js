@@ -4,6 +4,6 @@ exports.error = function( err ,req, res, next){
 	if( err !== undefined || err !== null){
 		res.status(500);
 		res.render('error',{ title: 'LaQuinta' + ' - Error', ErrorMessage : err} );
-	}else
+	}else  //si no hubo error continuemos, esto igual no deberia pasar 
 		next();
 }

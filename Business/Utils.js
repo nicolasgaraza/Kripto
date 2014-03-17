@@ -1,4 +1,4 @@
-
+console.log('Accessing Utils Mode');
 module.exports = function(){
 	   
 
@@ -59,8 +59,20 @@ module.exports = function(){
 	 		else
 	 			throw new Error("La partida no contiene el jugador %s", jugador);
 	 		return false;
-	 	}
+	 	},
+	 	setIoSocketAJugador : function(partidaId, nombreJugador, IO /*identificador del socket que esta usando el jugador*/){
+	 		var p = _getPartida(partidaId);
+	 		if(p.Jugador1.Nombre === nombreJugador){
+	 			p.Jugador1.Io =  IO;
+	 		}
+	 		else if(p.Jugador2.Nombre == nombreJugador){
+	 			p.Jugador2.Io =  IO;	
+	 		}
+	 		else
+	 			throw new Error("No se ha podido asociar el IO indicado al jugador solicitado");
 
+
+	 	}
 	 }
 } 
 
@@ -74,12 +86,13 @@ function _getPartida(partidaId, callback){
 };
 
 var playSpace = new function() {
-	 	this.Partidas = []
+	 	this.Partidas = [];	
  };
 
 function Jugador(nombre){
 	this.Nombre = nombre;
 	this.Puntos = 0;
+	this.Io = null;
 };
 
 

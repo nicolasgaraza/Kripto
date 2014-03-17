@@ -13,12 +13,12 @@ var io = require("socket.io");
 var app = express();
 
 //save it on the app to share it on multiple sites
-app.set("io", io);
+
 
 var partida = require("./routes/partida")(app);
-var utils =  require("./Utils/Utils.js");
-app.set("utils",utils);
+var utils =  require("./Business/Utils.js");
 
+app.set("utils",utils);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -66,6 +66,7 @@ if ('development' == app.get('env')) {
 }
 
 
+
 app.get('/', routes.index);
 app.post('/login', routes.login);
 app.get('/default', routes.default);
@@ -75,6 +76,15 @@ app.get('/partidaNueva', partida.newPartida);
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+console.log("estos son los datos de utils %j"  + utils);
+
+  console.log('llamo a ioOperations con los datos %s ', utils);
+	var ioOperations =  require("./Business/IoOperations.js")(utils, io);
+	ioOperations.registerEvents();
+
+
 });
 //start socket io
-io.listen(server);
+io = io.listen(server);
+
+app.set("io", io);
