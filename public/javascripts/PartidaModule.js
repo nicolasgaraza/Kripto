@@ -7,9 +7,9 @@ var partidaModule =  angular.module('PartidaModule', []);
 
 partidaModule.value('defaults', {
 	partidaId : $("#partidaId").val(),
-	jugadorActual : $("#jugadorActual").val(); 
-	socket = null ,
-	Mensaje = null,
+	jugadorActual : $("#jugadorActual").val(), 
+	socket : null ,
+	Mensaje : null,
 });
 
 
@@ -19,7 +19,7 @@ partidaModule.factory('Cartas', function (){
 	return [];
 });
 
-partidaModule.factory('Io', function (Cartas, Mensaje,  defaults){
+partidaModule.factory('Io', function (Cartas,  defaults){
 
 	
 	///Realiza la conexion con el servidor para indicar que el jugador actual a entrado a la partida

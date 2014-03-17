@@ -30,7 +30,7 @@ module.exports = function(app){
 
 
         //renderizamos la pagina solicitada
-        res.render("partida", {partidaId : req.params.partidaId});
+        res.render("partida", {partidaId : req.params.partidaId, jugadorActual: req.session.jugadorNombre});
       },
   newPartida : function(req, res){
         console.log("llamada de nueva partida");
