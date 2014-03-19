@@ -81,9 +81,17 @@ module.exports = function(){
 	 			throw new Error("No se ha podido asociar el IO indicado al jugador solicitado");
 
 
-	 	}
+	 	},
+        calcularExpr: _calcularExpr
 	 }
 } 
+
+function _calcularExpr(expr) {
+    var mathjs = require('mathjs'),
+        math = mathjs();
+
+    math.eval(expr);
+};
 
 function _getPartida(partidaId, callback){
 	for (var i = 0; i < playSpace.Partidas.length; i++) {
