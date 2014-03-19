@@ -4,9 +4,12 @@
 module.exports = function(utils /*Modulo Utils*/, io /*componente io.socket*/){
 	//eventos
 	var SocketIoEvents =  {};
+	SocketIoEvents.PuedeJugar =  "puedeJugar";
 	SocketIoEvents.Barajar = "barajar";
-	SocketIoEvents.Registrar = "registrarse";
 	SocketIoEvents.BarajarCompleted =  'barajarCompleted';
+	SocketIoEvents.Registrar = "registrarse";
+	SocketIoEvents.Pausar =  'pausar';
+	SocketIoEvents.PausarCompleted =  'pausarCompleted';
 
 
 	return {
@@ -19,12 +22,28 @@ module.exports = function(utils /*Modulo Utils*/, io /*componente io.socket*/){
 				socket.on(SocketIoEvents.Registrar, function(data){
 					console.log(' %j :se ha registrado el socket %s para la partida %s', data ,data.socketId, data.partidaId );
 					socket.join(data.partidaId);
+					if(utils().getPartida(data.partidaId).puedeJugar()){
+						setTimeout(function(){
+							var cartas = utils().barajar(data.partidaId);
+							io.sockets.in(data.partidaId).emit(SocketIoEvents.BarajarCompleted,{
+								Cartas : cartas	
+							});
+						}, 10000);
+					}
 				});
-				socket.on('barajar', function(data){
+				/*socket.on(SocketIoEvents.Barajar, function(data){
 					console.log('se ha llamado al evento barajar los datos son %s' , data);
 					var cartas = utils().barajar(data.partidaId);
-					io.sockets.in(data.room).emit(SocketIoEvents.BarajarCompleted,{
+					io.sockets.in(data.partidaId).emit(SocketIoEvents.BarajarCompleted,{
 						Cartas : cartas	
+					});
+				});*/
+				
+				socket.on(SocketIoEvents.Pausar, function(data){
+					console.log('se ha llamado al evento pausar los datos son %s' , data);
+					utils().pausarPartida(data.partidaId, data.jugadorActual);
+					io.sockets.in(data.partidaId).emit(SocketIoEvents.PausarCompleted,{
+						Jugador : data.jugadorActual	
 					});
 				});
 			});

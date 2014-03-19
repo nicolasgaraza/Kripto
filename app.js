@@ -75,10 +75,10 @@ app.get('/partidaNueva', partida.newPartida);
 
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-console.log("estos son los datos de utils %j"  + utils);
+	console.log('Express server listening on port ' + app.get('port'));
+	console.log("estos son los datos de utils %j"  + utils);
 
-  console.log('llamo a ioOperations con los datos %s ', utils);
+	console.log('llamo a ioOperations con los datos %s ', utils);
 	var ioOperations =  require("./Business/IoOperations.js")(utils, io);
 	ioOperations.registerEvents();
 

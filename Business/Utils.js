@@ -60,6 +60,15 @@ module.exports = function(){
 	 			throw new Error("La partida no contiene el jugador %s", jugador);
 	 		return false;
 	 	},
+		pausarPartida : function (partidaId, jugadorNombre){
+			var p = _getPartida(partidaId);
+			if(p.puedeJugar()){
+				p.pausar(jugadorNombre);
+			}else{
+				throw new Error('La partidad que se decidio pausar no puede jugar en el momento');
+			}
+			return true;
+		},
 	 	setIoSocketAJugador : function(partidaId, nombreJugador, IO /*identificador del socket que esta usando el jugador*/){
 	 		var p = _getPartida(partidaId);
 	 		if(p.Jugador1.Nombre === nombreJugador){

@@ -43,15 +43,22 @@
     				<div class="jumbotron">
 						<div class="container">
 
-							<p>Partida en si</p>
 							  <div class="">
-								<div class="row">
-								  <div class="col-md-2 carta">    </div>
-								  <div class="col-md-2 carta">    </div>
-								  <div class="col-md-2 carta">    </div>
-								  <div class="col-md-2 carta">    </div>
-								  <div class="col-md-2 carta quinta"></div>    
+								<div class="row" >
+								  <div ng-repeat="carta in cartas" class="col-md-2 carta {{$index === 4 ? 'quinta': ''}}"> 
+									<img ng-click="cargarValorCarta($index)" ng-src='/images/cartas/{{carta.Palo}}/{{carta.Numero}}'/>
+										Carta: {{carta.Palo}} Palo:{{carta.Numero}}
+								  </div>
+								 
 								</div>
+								 <button type="button" ng-click="pausarPartida()" ng-hide="puedePausar()"  class="btn btn-xs btn-primary" >
+									Listo
+								  </button> 
+								
+								<!-- <div class="col-md-2 carta">    </div>
+								  <div class="col-md-2 carta">    </div>
+								  <div class="col-md-2 carta">    </div>
+								  <div class="col-md-2 carta quinta"></div>  -->
 							  </div>
 						</div>
 					</div>
@@ -61,8 +68,11 @@
     			</div>
           <div class="container">
             <div class="container">
-              <p>Jugador Actual</p>
+              <p>{{jugadorActual}}</p>
             </div>
+			<div class="jugada" ng-show="mostrarPanelIndicarJugada">
+				
+			</div>
           </div>
     		</div>
     		<div class="col-md-2">

@@ -1,7 +1,3 @@
-
-
-//luego mover a otro lado
-
 var partidaModule =  angular.module('PartidaModule', []);
 
 
@@ -12,13 +8,7 @@ partidaModule.value('defaults', {
 	Mensaje : null,
 });
 
-
-//Interfaz para definir las operaciones
-
-partidaModule.factory('Cartas', function (){
-	return [];
-});
-
+/*
 partidaModule.factory('Io', function (Cartas,  defaults){
 
 	
@@ -26,7 +16,14 @@ partidaModule.factory('Io', function (Cartas,  defaults){
 	///Esta operacion registra los websockets
 
 
-	return {
+	
+});*/
+
+
+partidaModule.controller('PartidaController', function ($scope,$location, defaults){
+	console.log($location);
+
+	var Io = {
 		conectarPartida : function (partidaId, callback){
 			console.log('conecto la partida ' + partidaId );
 			defaults.socket =  io.connect('http://localhost:3000');
@@ -35,8 +32,16 @@ partidaModule.factory('Io', function (Cartas,  defaults){
 			//Evento emitido que sucede una vez se allan barajado la partida seleccionada
 			socket.on('barajarCompleted' , function (data) {
 				console.log('Se ha recibido el evento barajarCompleted los datos enviados fueron ',JSON.stringify(data));
-				Cartas =  data.Cartas;
+				$scope.cartas =  data.Cartas;
+				console.log('Ahora cartas posee ' +  JSON.stringify($scope.cartas));
+				$scope.$apply();
 		  	});
+			//Evento emitido que sucede una vez se allan barajado la partida seleccionada
+			socket.on('pausarCompleted' , function (data) {
+				console.log('Se ha recibido el evento pausarCompleted los datos enviados fueron ',JSON.stringify(data));
+				MostrarPanelIndicarJugada();
+		  	});
+			
 			//Evento que se llama una vez se valido la jugada en la partida actual, el mismo no debe porque haber sido
 			//emitido por el jugadorActual pero si siempre es para una partida
 		  	socket.on('validarJugadaCompleted', function(data/*{Mensaje: , , Puntajes : {Jugador: , Puntaje : }}*/){
@@ -56,23 +61,46 @@ partidaModule.factory('Io', function (Cartas,  defaults){
 		},
 
 	};
-});
-
-
-partidaModule.controller('PartidaController', function ($scope,$location,Io, defaults, Cartas){
-	console.log($location);
-
+	
 	//var registrar el web socket
 	Io.conectarPartida(defaults.partidaId, function(){
 		console.log("Se ha conectado correctamente");
 	});
-
-	//variable donde guardaremos las cartas que nos dara 
-	$scope.cartas = Cartas;
+	$scope.showPartida =  true; //con esto quitaremos el loading de la pagina /*Por hacer*/
 	$scope.jugadorActual = defaults.jugadorActual;
-
+	//variable donde guardaremos las cartas que nos dara 
+	$scope.cartas = [];
+	console.log("La variable Cartas tiene en su init " + JSON.stringify($scope.cartas));
+	$scope.jugadorActual = defaults.jugadorActual;
+	
+	
+	//Esta funcion oculta el boton de 'Listo'
+	$scope.puedePausar = function (){
+		return $scope.cartas.length !== 5;
+		//return false;
+	};
+	
+	$scope.pausarPartida =  function() {
+		console.log('llamado a la funcion pausar');
+		defaults.socket.emit('pausar', {partidaId :  defaults.partidaId, jugadorActual : defaults.jugadorActual });	
+	};
+	
+	$scope.mostrarPanelIndicarJugada =  false;
+	function MostrarPanelIndicarJugada(){
+		$scope.mostrarPanelIndicarJugada =  true;
+		
+	};
+	
+	$scope.cargarValorCarta= function (index){
+		if( index + 1=== 5){
+			return; //es la quinta carta no hago nada
+		}
+	};
+	
 });
 
+
+//Interfaz para definir las operaciones
 
 function soloDePrueba(partidaId)
 {
