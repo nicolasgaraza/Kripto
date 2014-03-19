@@ -49,7 +49,7 @@ module.exports = function(){
 	 		if( p.puedeJugar()){
  				//validar jugada, ahora retornamos true
 				if(p.Jugador1.Nombre === jugador || p.Jugador2.Nombre === jugador){
-
+					
 				}else{
 					throw new Error("El jugador indicado no es valido para la partida " + partidaId );
 				}
@@ -90,7 +90,7 @@ function _calcularExpr(expr) {
     var mathjs = require('mathjs'),
         math = mathjs();
 
-    math.eval(expr);
+    return math.eval(expr);
 };
 
 function _getPartida(partidaId, callback){

@@ -39,7 +39,7 @@ partidaModule.controller('PartidaController', function ($scope,$location, defaul
 			//Evento emitido que sucede una vez se allan barajado la partida seleccionada
 			socket.on('pausarCompleted' , function (data) {
 				console.log('Se ha recibido el evento pausarCompleted los datos enviados fueron ',JSON.stringify(data));
-				MostrarPanelIndicarJugada();
+				MostrarPanelIndicarJugada(data.Jugador);
 		  	});
 			
 			//Evento que se llama una vez se valido la jugada en la partida actual, el mismo no debe porque haber sido
@@ -86,9 +86,11 @@ partidaModule.controller('PartidaController', function ($scope,$location, defaul
 	};
 	
 	$scope.mostrarPanelIndicarJugada =  false;
-	function MostrarPanelIndicarJugada(){
+	function MostrarPanelIndicarJugada(Jugador /*jugador que pauso la partida, puede no ser el usuario actual*/){
 		$scope.mostrarPanelIndicarJugada =  true;
-		
+		if($scope.jugadorActual === Jugador){
+			$scope.mostrarPanelIndicarEscribirJugada = true;
+		}
 	};
 	
 	$scope.cargarValorCarta= function (index){

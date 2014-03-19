@@ -101,6 +101,27 @@ exports.Suit1 = {
 
 
 		test.done();
+	},
+	calcularExpr : function(test){
+		/*
+		test.throws(function(){
+			utils.validarJugada("jugadaNoValida", partida.Jugador1.Nombre, partida.PartidaId);
+		}, null, "La jugada enviada no e's valida, debe generar un error");
+		*/
+
+		
+
+		test.throws(function(){
+			utils.calcularExpr("1f5461+1");
+		}, null, "calcularExpr::La jugada no es valida");
+
+		var jugadaCorrecta = utils.calcularExpr("1+1+1+1");
+		
+		test.ok(jugadaCorrecta=== 4,
+		 "calcularExpr::La jugada enviada es valida, deberia ser correcta el valor proporcionado fue " + jugadaCorrecta);
+
+
+		test.done();
 	}/*,
 	setJugadorIO : function(test){
 		test.throws( function (){
