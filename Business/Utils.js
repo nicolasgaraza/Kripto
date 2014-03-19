@@ -125,6 +125,7 @@ Partida.prototype.pausar = function(jugador){
 };
 
 Partida.prototype.puedeJugar = function(){
+	console.log('puedeJugar:: El jugador1 es %j y el jugador2 es %j', this.Jugador1, this.Jugador2);
 	if(this.Jugador1 !== null && this.Jugador2 !== null)
 		return true;
 	return false;

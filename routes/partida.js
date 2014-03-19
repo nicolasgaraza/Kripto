@@ -21,7 +21,7 @@ module.exports = function(app){
           console.log("se ha intentado acceder a una partida ya copletada %j por el jugador %s", partida, req.session.jugador);
           throw new Error("Mmm... esta partida esta cerrada y no puedes acceder a la misma, selecciona o crea otra partida nueva");
         }
-        else if(partida.Jugador2 === null){
+        else if(partida.Jugador2 === null && partida.Jugador1.Nombre !==req.session.jugadorNombre ){
           console.log("se ha agregado al jugador %s a la partida %j", req.session.jugadorNombre, partida);
           utils.setJugador(partida.PartidaId, req.session.jugadorNombre);
         }

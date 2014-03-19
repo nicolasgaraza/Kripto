@@ -23,6 +23,7 @@ module.exports = function(utils /*Modulo Utils*/, io /*componente io.socket*/){
 					console.log(' %j :se ha registrado el socket %s para la partida %s', data ,data.socketId, data.partidaId );
 					socket.join(data.partidaId);
 					if(utils().getPartida(data.partidaId).puedeJugar()){
+						console.log('Se empezara a jugar la partida con Id ' + data.partidaId );
 						setTimeout(function(){
 							var cartas = utils().barajar(data.partidaId);
 							io.sockets.in(data.partidaId).emit(SocketIoEvents.BarajarCompleted,{
